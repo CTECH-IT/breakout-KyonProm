@@ -7,22 +7,61 @@ let y = canvas.height-30;
 let dx = 2;
 let dy = -2;
 
-function draw(){
-    // clear the canvas
-    ctx.clearRect(0, 0, canvas.width. canvas.height);
-    
-    // draw the ball
+let ballRadius = 10;
+
+let paddleHeight = 10;
+let paddleWidth = 75;
+let paddleX = (canvas.width-paddleWidth) / 2;
+
+let rightPressed = false;
+let leftPressed = false;
+
+function drawBall(){
     ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI*2);
+    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
     ctx.fillStyle = "0095DD";
     ctx.fill();
     ctx.closePath();
+}
 
+function drawPaddle(){
+    ctx.beginpath();
+    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+function draw(){
+    // clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // draw the ball
+    drawBall();
+  
 // change the x and y values for the ball
 x+= dx;
 y+= dy;
 
+// check to see if we've gone off the edge of the board
+if (x + dx > canvas.width - ballRadius|| x + dx < ballRadius) {
+    dx = -dx;
 }
+if(y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+    dy = -dy;
+}
+
+
+
+
+function keyDownHandler(e){
+    if(e.key == "Right" || e.key == "ArrowRight")
+}
+}
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
 setInterval(draw, 10);
 
 
