@@ -9,17 +9,21 @@ let dy = -2;
 
 function draw(){
     // clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width. canvas.height);
+    
     // draw the ball
     ctx.beginPath();
     ctx.arc(x, y, 10, 0, Math.PI*2);
     ctx.fillStyle = "0095DD";
     ctx.fill();
     ctx.closePath();
-}
-setInterval(draw, 10);
 
 // change the x and y values for the ball
 x+= dx;
 y+= dy;
+
+}
+setInterval(draw, 10);
+
+
 
