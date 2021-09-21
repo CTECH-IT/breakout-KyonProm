@@ -16,7 +16,7 @@ let paddleX = (canvas.width-paddleWidth) / 2;
 let rightPressed = false;
 let leftPressed = false;
 
-function drawBall(){
+function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
     ctx.fillStyle = "0095DD";
@@ -24,45 +24,72 @@ function drawBall(){
     ctx.closePath();
 }
 
-function drawPaddle(){
-    ctx.beginpath();
+function drawPaddle() {
+    ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
 }
 
-function draw(){
+    function draw(){
     // clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // draw the ball
     drawBall();
-  
-// change the x and y values for the ball
-x+= dx;
-y+= dy;
 
-// check to see if we've gone off the edge of the board
-if (x + dx > canvas.width - ballRadius|| x + dx < ballRadius) {
-    dx = -dx;
+    // change the x and y values for the ball
+    x+= dx;
+    y+= dy;
+
+    // check to see if we've gone off the edge of the board
+    if (x + dx > canvas.width - ballRadius|| x + dx < ballRadius) {
+     dx = -dx;
+    }
+
+    if(y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+        dy = -dy;
+    }
+
+    // paddle controls
+    if(rightPressed) {
+    paddleX += 7;
+        if (paddleX + paddleWidth > canvas.width) {
+            paddleX = canvas.width - paddleWidth;
+        }
+    }
+    else if (leftPressed){
+        paddleX -= 7;
+        if (paddleX < 0){
+             paddleX = 0;
+        }
+    }
+
+    drawPaddle();
+
 }
-if(y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-    dy = -dy;
+
+function keyDownHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = true;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = true;
+    }
 }
 
-
-
-
-function keyDownHandler(e){
-    if(e.key == "Right" || e.key == "ArrowRight")
-}
+function keyUpHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = false;
+    }
+    else if (e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+    }
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 setInterval(draw, 10);
-
-
 
